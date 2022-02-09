@@ -1,32 +1,27 @@
 <template>
-  <div>
-    <h1>Demo game</h1>
-    <h2>Number</h2>
-    <p>{{ num }}</p>
-    <button @click="bump">Bump</button>
-  </div>
+  <router-view />
 </template>
-
 <script>
 export default {
-  name: "App",
-  data() {
-    return {
-      num: 0,
-    };
-  },
-  methods: {
-    bump() {
-      this.num++;
-      this.$socket.emit("changeNum", { num: this.num });
-    },
-  },
-  sockets: {
-    numChanged(data) {
-      this.num = data.num;
-    },
+  created() {
+    this.$socket.emit("gameLoaded", {});
   },
 };
 </script>
+<style>
+body {
+  margin: 0;
+}
 
-<style></style>
+#app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  background: radial-gradient(
+    circle farthest-corner at top left,
+    var(--background) 0,
+    var(--background-dark) 100%
+  );
+}
+</style>
