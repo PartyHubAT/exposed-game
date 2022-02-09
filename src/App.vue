@@ -18,10 +18,9 @@ body {
   height: 100vh;
   overflow: hidden;
 
-  background: radial-gradient(
-    circle farthest-corner at top left,
-    var(--background) 0,
-    var(--background-dark) 100%
+  background: linear-gradient(to right,
+    var(--background-gradient-one),
+    var(--background-gradient-two)
   );
 }
 </style>

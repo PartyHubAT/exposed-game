@@ -1,6 +1,6 @@
 ﻿<template>
   <div id="content">
-    <div class="title">And then...</div>
+    <div class="title">exposed</div>
     <div class="subtitle">Waiting for players ⏲</div>
   </div>
 </template>

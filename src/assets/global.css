@@ -10,6 +10,8 @@
   --surface: #f8f8f8;
   --background: #fdba1a;
   --background-dark: #f09d06;
+  --background-gradient-one: #EDE574;
+  --background-gradient-two: #e1f4c4;
   --font-header: "Yatra One", "Arial";
   --font-content: "Varta", "SansSerif";
 }
