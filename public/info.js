@@ -1,3 +1,3 @@
 ﻿module.exports = {
-  name: "and-then"
+  name: "exposed"
 }
