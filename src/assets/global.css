@@ -1,19 +1,34 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Yatra+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Varta&family=Yatra+One&display=swap");
+﻿@import url('https://fonts.googleapis.com/css2?family=Graduate&family=Inter:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Graduate&family=Inter:wght@300;400;600&family=Poppins:wght@300;400&display=swap');
 
 :root {
   --primary: #2d607c;
+  --primary-shade: #52877f;
   --primary-light: #4d84a1;
   --primary-dark: #184762;
   --primary-disabled: #a0b6c1;
+  --light: #f1f1f1;
+  --dark: #0b0b0b;
   --on-primary: #e8e8e8;
   --surface: #f8f8f8;
   --background: #fdba1a;
   --background-dark: #f09d06;
   --background-gradient-one: #EDE574;
   --background-gradient-two: #e1f4c4;
-  --font-header: "Yatra One", "Arial";
-  --font-content: "Varta", "SansSerif";
+  --font-header: "Graduate", "Arial";
+  --font-content: "Poppins", "SansSerif";
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 /* Extra small devices (phones, 600px and down) */
