@@ -1,6 +1,4 @@
-﻿
-
-/**
+﻿/**
  * @param {EmitToAll} emitToAll
  * @param {EmitToOne} emitToOne
  * @param {EndGame} endGame
@@ -47,15 +45,18 @@ function initServerLogic(emitToAll, emitToOne, endGame, players, settings) {
    */
   (function init() {
     players.forEach((player) => {
-      playerGameData.set(player._id, { });
+      playerGameData.set(player._id, {});
     });
   })();
 
   return {
     startGame() {
+      /*
       players.forEach((player, index) => {
         emitToOne(player._id, "start", {});
-      });
+      });*/
+      emitToAll("start", {});
+      emitToAll("exposedPlayerinfo", players);
     },
     events: {
       startWaiting(playerId) {
