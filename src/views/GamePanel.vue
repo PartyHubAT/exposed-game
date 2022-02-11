@@ -20,7 +20,7 @@ import TextInput from "../components/TextInput";
 import WritingPrompt from "../components/WritingPrompt";
 import SendButton from "../components/SendButton";
 export default {
-  name: "TextWriting",
+  name: "GamePanel",
   components: { SendButton, WritingPrompt, TextInput },
   data() {
     return {
