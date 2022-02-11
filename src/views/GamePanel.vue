@@ -1,68 +1,43 @@
 ﻿<template>
-  <div class="title">And then...</div>
   <div class="content">
-    <div class="form" v-if="readyToWrite">
-      <writing-prompt :is-first-line="isFirstLine" />
-      <div v-if="readyToWrite && !isFirstLine" class="lastLine">
-        {{ lastLine }}
-      </div>
-      <div class="input-section">
-        <text-input class="text-input" v-model="text" />
-        <send-button @click="submitText" :can-send="hasEnteredText" />
-      </div>
-    </div>
-    <span class="waitText" v-else>Waiting for next text. 😴</span>
+    <router-link to="/">Start</router-link>
+    <h1>{{ $root.currentPlayer._id }}</h1>
+
+    <Question v-if="currentQuestion" :question="currentQuestion" />
+    <PlayerBar v-if="$root.players" :players="$root.players" />
   </div>
 </template>
 
 <script>
-import TextInput from "../components/TextInput";
-import WritingPrompt from "../components/WritingPrompt";
-import SendButton from "../components/SendButton";
+import Question from "../components/Question";
+import PlayerBar from "../components/PlayerBar";
 export default {
   name: "GamePanel",
-  components: { SendButton, WritingPrompt, TextInput },
+  components: { Question, PlayerBar },
   data() {
     return {
-      lastLine: null,
-      text: "",
+      currentQuestion: null
     };
   },
-  computed: {
-    readyToWrite() {
-      return this.lastLine !== null;
-    },
-    isFirstLine() {
-      return this.readyToWrite && this.lastLine === "";
-    },
-    hasEnteredText() {
-      return this.text.length > 0;
-    },
-  },
-  methods: {
-    reset() {
-      this.lastLine = null;
-      this.text = "";
-    },
-    submitText() {
-      this.$socket.emit("lineDone", { line: this.text });
-      this.reset();
-    },
-  },
+  computed: {},
+  methods: {},
   sockets: {
-    nextText(data) {
-      const { lastLine } = data;
-      this.lastLine = lastLine;
+    start(data) {
+      console.log("start");
+      console.log(arguments);
+      const { currentPlayer, players, matches } = data;
+      this.$root.currentPlayer = currentPlayer;
+      this.$root.players = players;
     },
-    gameDone(data) {
-      const { texts } = data;
-      this.$store.dispatch("setResults", texts);
-      this.$router.push("/results");
-    },
+    nextQuestion(data) {
+      console.log(data);
+      this.currentQuestion = data;
+      const { id, totalQuestionCount, question, match } = data;
+    }
   },
   mounted() {
-    this.$socket.emit("startWaiting", {});
-  },
+    this.$socket.emit("getNextQuestion", this.$root.currentPlayer._id);
+  }
 };
 </script>
 
@@ -79,6 +54,7 @@ export default {
 
 .content {
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   align-items: center;
