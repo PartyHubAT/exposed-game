@@ -9,8 +9,15 @@
 export default {
   name: "LoadingScreen",
   sockets: {
-    start() {
-      this.$router.push("/write");
+    start(data) {
+      const {currentPlayer, players, matches} = data;
+      this.$root.currentPlayer = currentPlayer;
+      this.$root.players = players;
+      setTimeout(() => this.$router.push("/exposed"), 3000);
+    },
+    exposedPlayerinfo(data) {
+      console.log("exposedPlayerinfo");
+      console.log(data);
     },
   },
 };
