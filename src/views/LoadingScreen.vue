@@ -1,7 +1,7 @@
 ﻿<template>
   <div id="content">
     <div class="title">exposed</div>
-    <div class="subtitle">Waiting for players ⏲</div>
+    <div class="subtitle">Waiting for players</div>
   </div>
 </template>
 
@@ -27,11 +27,12 @@ export default {
 }
 .title {
   font-family: var(--font-header);
-  color: var(--primary);
+  text-shadow: -4px -4px 1px var(--dark);
+  color: var(--light);
 }
 .subtitle {
   font-family: var(--font-content);
-  color: #f8f8f8;
+  color: var(--dark);
 }
 
 /* Extra small devices (phones, 600px and down) */
