@@ -1,4 +1,6 @@
-﻿/**
+﻿const QuestionHandler = require("./questionHandler");
+
+/**
  * @param {EmitToAll} emitToAll
  * @param {EmitToOne} emitToOne
  * @param {EndGame} endGame
@@ -7,38 +9,8 @@
  * @return {GameServer}
  */
 function initServerLogic(emitToAll, emitToOne, endGame, players, settings) {
-  /**
-   * @type {Map<PlayerId, GameData>}
-   */
   const playerGameData = new Map();
-  /**
-   * @type {Text[]}
-   */
-  const doneTexts = [];
-
-  /**
-   * Checks if the game is complete
-   * @return {boolean}
-   */
-  function gameIsDone() {
-    return doneTexts.length === settings.textsPerPlayer * players.length;
-  }
-
-  /**
-   * Gets the index of a player
-   * @param {string} playerId The id of the player
-   * @returns {number} The players index
-   */
-  function getPlayerIndex(playerId) {
-    return players.findIndex((player) => player._id === playerId);
-  }
-
-  /**
-   * Completes the game
-   */
-  function completeGame() {
-    emitToAll("gameDone", { texts: doneTexts.map((it) => it.lines) });
-  }
+  const questionHandler = new QuestionHandler();
 
   /**
    * Initializes the game-data
@@ -51,17 +23,21 @@ function initServerLogic(emitToAll, emitToOne, endGame, players, settings) {
 
   return {
     startGame() {
-      /*
-      players.forEach((player, index) => {
-        emitToOne(player._id, "start", {});
-      });*/
-      emitToAll("start", {});
-      emitToAll("exposedPlayerinfo", players);
+      questionHandler.generateMatches(players);
+      players.forEach((player) => {
+        emitToOne(player._id, "start", {
+          currentPlayer: player,
+          players,
+        });
+      });
     },
     events: {
-      startWaiting(playerId) {
-        const gameData = playerGameData.get(playerId);
-        gameData.waiting = true;
+      getNextQuestion(playerId) {
+        emitToOne(playerId, "nextQuestion", questionHandler.getQuestion());
+      },
+      voteQuestion(playerId, voteObject) {
+        const voteUpdate = questionHandler.handleVote(playerId, voteObject);
+        emitToAll("voteUpdate", voteUpdate);
       },
     },
   };
