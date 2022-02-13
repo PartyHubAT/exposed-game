@@ -1,11 +1,20 @@
 class QuestionHandler {
-  constructor() {
+  constructor(mongoose) {
     this.index = 0;
-    this.setQuestions();
+    this.loadQuestions(mongoose);
   }
 
-  setQuestions() {
+  loadQuestions(mongoose) {
     this.questions = ["Question 1 ?", "Questions 2 ?"];
+    const questionRepo = new (require("./question/QuestionRepo"))(mongoose);
+    const questionService = new (require("./question/QuestionService"))(
+      questionRepo
+    );
+    questionService.getAllQuestions().then((result) => {
+      console.log(result);
+      const res = result.map((q) => q.question);
+      this.questions = res;
+    });
   }
 
   generateMatches(players) {
@@ -36,13 +45,15 @@ class QuestionHandler {
     return {
       index: this.index,
       questionCount: this.index + 1,
-      totalQuestionCount: this.questions.length,
+      totalQuestionCount: this.matches.length,
       question: this.questions[this.index],
       match: this.getMatch(this.index),
     };
   }
 
   handleVote(player, vote) {
+    console.log("handleVote");
+    console.log(arguments);
     const { index, isPlayerA } = vote;
     if (isPlayerA) this.matches[index].votesA.push(player);
     if (!isPlayerA) this.matches[index].votesB.push(player);
@@ -52,11 +63,10 @@ class QuestionHandler {
   }
 
   incrementIndex() {
-    this.index++;
+    if (this.index < this.matches.length) this.index++;
   }
 
   getResults() {
-    console.log("getResults " + this.index);
     return this.matches[this.index];
   }
 }

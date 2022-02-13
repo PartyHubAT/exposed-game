@@ -1,6 +1,5 @@
 ﻿<template>
   <div class="content">
-    <router-link to="/">Start</router-link>
     <Question
       v-show="currentQuestion && !currentResult"
       :question="currentQuestion"
@@ -41,7 +40,6 @@ export default {
       currentResult: null
     };
   },
-  computed: {},
   methods: {
     nextQuestion() {
       this.$socket.emit("getNextQuestion", this.$root.currentPlayer._id);
@@ -55,11 +53,15 @@ export default {
       this.currentQuestion = data;
     },
     questionResults(data) {
+      this.$refs.questionComponent.clearTimeouts();
       this.currentResult = data;
     }
   },
   mounted() {
-    this.$socket.emit("getFirstQuestion", this.$root.currentPlayer._id);
+    setTimeout(
+      () => this.$socket.emit("getFirstQuestion", this.$root.currentPlayer._id),
+      2000
+    );
   }
 };
 </script>

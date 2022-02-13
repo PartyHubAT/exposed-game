@@ -19,7 +19,7 @@
    * @type {Settings}
    */
   defaultValues: {
-    votingTime: 10,
+    votingTime: 30,
     anonymousResults: true,
   },
 };

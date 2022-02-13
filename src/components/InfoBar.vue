@@ -5,7 +5,10 @@
         v-for="player in $root.players"
         :key="player"
         class="player"
-        :class="{ currentPlayer: player._id == $root.currentPlayer._id }"
+        :class="[
+          player._id == $root.currentPlayer._id ? 'currentPlayer' : '',
+          player.role === 'HOST' ? 'host' : ''
+        ]"
       >
         {{ player.name }}
       </span>
@@ -88,6 +91,9 @@ export default {
   border-radius: 5px;
   font-size: 0.9em;
   font-family: var(--font-header);
+}
+.host {
+  border: 1px dashed var(--secondary);
 }
 .currentPlayer {
   background: var(--primary);

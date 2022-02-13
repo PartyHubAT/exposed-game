@@ -16,19 +16,12 @@ function initServerLogic(
   settings,
   mongoose
 ) {
-  /*
-  console.log("questions");
-  const questionRepo = new (require("./question/QuestionRepo"))(mongoose);
-  const questionService = new (require("./question/QuestionService"))(
-    questionRepo
-  );
+  players = JSON.parse(JSON.stringify(players));
+  players[0].role = "HOST";
 
-  questionService.getAllQuestions().then((res) => {
-    console.log(res);
-  });
-*/
-  const questionHandler = new QuestionHandler();
+  const questionHandler = new QuestionHandler(mongoose);
   const VOTINGTIME = settings && settings.votingTime ? settings.votingTime : 10;
+  let timeouts = [];
 
   function stopVoting(playerId, broadcast) {
     if (!broadcast)
@@ -40,12 +33,14 @@ function initServerLogic(
    * Initializes the game-data
    */
   (function init() {
+    players[0].role = "HOST";
     questionHandler.generateMatches(players);
   })();
 
   return {
     startGame() {
       console.log(" ---- PLAYERS ----");
+
       console.log(JSON.stringify(players));
       console.log("------------------------");
       players.forEach((player) => {
@@ -59,22 +54,30 @@ function initServerLogic(
     events: {
       getFirstQuestion(playerId) {
         emitToOne(playerId, "nextQuestion", questionHandler.getQuestion());
-        setTimeout(() => {
+        let timeout = setTimeout(() => {
           stopVoting(playerId, false);
         }, 1000 * VOTINGTIME);
+        timeouts.push(timeout);
       },
       getNextQuestion(playerId) {
         console.log(arguments);
         questionHandler.incrementIndex();
         emitToAll("nextQuestion", questionHandler.getQuestion());
-        setTimeout(() => {
+        let timeout = setTimeout(() => {
           stopVoting(playerId, true);
         }, 1000 * VOTINGTIME);
+        timeouts.push(timeout);
       },
       voteQuestion(playerId, voteObject) {
+        console.log("voteQuestion");
+        console.log(arguments);
         const player = players.find((p) => p._id === playerId);
         const voteUpdate = questionHandler.handleVote(player, voteObject);
         emitToAll("voteUpdate", voteUpdate);
+        if (voteUpdate == players.length) {
+          timeouts.forEach((t) => clearTimeout(t));
+          setTimeout(() => stopVoting(playerId, true), 3000);
+        }
       },
     },
   };

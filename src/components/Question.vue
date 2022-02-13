@@ -1,12 +1,12 @@
 ﻿<template>
-  <div v-if="question">
+  <div v-if="question" class="questionContainer">
     <div
       class="countdown"
       :class="{ countdownWarn: votingTime <= 5 && votingTime != 0 }"
     >
       {{ votingTime }}
     </div>
-    <div class="votingInfo">
+    <div class="voteInfo">
       <span v-if="countAlreadyVoted > 0"
         >{{ countAlreadyVoted }} already voted!</span
       >
@@ -47,7 +47,8 @@ export default {
       countAlreadyVoted: 0,
       votingTime: 10,
       selectedVote: null,
-      alreadyVoted: false
+      alreadyVoted: false,
+      interval: null
     };
   },
   methods: {
@@ -56,10 +57,13 @@ export default {
       this.votingTime = this.$root.settings.votingTime;
       this.selectedVote = null;
       this.alreadyVoted = false;
-      let interval = setInterval(() => {
+      this.interval = setInterval(() => {
         if (this.votingTime != 0) this.votingTime--;
         if (this.votingTime == 0) clearInterval(interval);
       }, 1000);
+    },
+    clearTimeouts() {
+      if (this.interval) clearInterval(this.interval);
     },
     selectVote(player) {
       if (this.alreadyVoted) return;
@@ -85,12 +89,22 @@ export default {
 </script>
 
 <style scoped>
+.questionContainer {
+  display: grid;
+  justify-content: center;
+}
+
 .question {
   color: white;
   font-size: 1.5em;
   padding: 20px;
   font-style: italic;
   font-family: var(--font-header);
+  text-align: center;
+}
+
+.voteInfo {
+  text-align: center;
 }
 
 .voteButtons {
