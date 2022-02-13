@@ -2,14 +2,11 @@ class QuestionHandler {
   constructor() {
     this.index = 0;
     this.setQuestions();
-    //this.generateMatches();
   }
 
   setQuestions() {
     this.questions = ["Question 1 ?", "Questions 2 ?"];
   }
-
-  setVotes() {}
 
   generateMatches(players) {
     this.matches = [];
@@ -38,19 +35,29 @@ class QuestionHandler {
   getQuestion() {
     return {
       index: this.index,
+      questionCount: this.index + 1,
       totalQuestionCount: this.questions.length,
       question: this.questions[this.index],
       match: this.getMatch(this.index),
     };
   }
 
-  handleVote(playerId, vote) {
-    const { index, voteFor, isPlayerA } = vote;
-    if (isPlayerA) this.matches[index].votesA.push(voteFor);
-    if (!isPlayerA) this.matches[index].votesB.push(voteFor);
+  handleVote(player, vote) {
+    const { index, isPlayerA } = vote;
+    if (isPlayerA) this.matches[index].votesA.push(player);
+    if (!isPlayerA) this.matches[index].votesB.push(player);
     return (
       this.matches[index].votesA.length + this.matches[index].votesB.length
     );
+  }
+
+  incrementIndex() {
+    this.index++;
+  }
+
+  getResults() {
+    console.log("getResults " + this.index);
+    return this.matches[this.index];
   }
 }
 
