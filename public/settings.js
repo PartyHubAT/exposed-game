@@ -1,19 +1,17 @@
 ﻿module.exports = {
   form: {
-    textsPerPlayer: {
-      type: Number,
-      displayName: "Texts per player",
-      label: "How many texts will each player write?",
-      min: 1,
-      max: 10,
+    votingTime: {
+      type: "Number",
+      displayName: "Voting time",
+      label: "How much time will players have to vote?",
+      min: 10,
+      max: 120,
       required: true,
     },
-    linesPerText: {
-      type: Number,
-      displayName: "Lines per text",
-      label: "How many lines should each text have?",
-      min: 2,
-      max: 10,
+    anonymousResults: {
+      type: "Checkbox",
+      displayName: "Anonymous results",
+      label: "Which player voted how remains anonymous",
       required: true,
     },
   },
@@ -21,7 +19,7 @@
    * @type {Settings}
    */
   defaultValues: {
-    textsPerPlayer: 1,
-    linesPerText: 3
+    votingTime: 10,
+    anonymousResults: true,
   },
 };
