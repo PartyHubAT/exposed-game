@@ -10,16 +10,14 @@ export default {
   name: "LoadingScreen",
   sockets: {
     start(data) {
-      const {currentPlayer, players, matches} = data;
+      const { currentPlayer, players, settings } = data;
       this.$root.currentPlayer = currentPlayer;
       this.$root.players = players;
+      this.$root.settings = settings;
+      console.log(this.$root);
       setTimeout(() => this.$router.push("/exposed"), 3000);
-    },
-    exposedPlayerinfo(data) {
-      console.log("exposedPlayerinfo");
-      console.log(data);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -71,5 +69,4 @@ export default {
     font-size: 25px;
   }
 }
-
 </style>
