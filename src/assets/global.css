@@ -1,5 +1,5 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Graduate&family=Inter:wght@300;400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Graduate&family=Inter:wght@300;400;600&family=Poppins:wght@300;400&display=swap');
+﻿@import url("https://fonts.googleapis.com/css2?family=Graduate&family=Inter:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Graduate&family=Inter:wght@300;400;600&family=Poppins:wght@300;400&display=swap");
 
 :root {
   --primary: #2d607c;
@@ -11,24 +11,28 @@
   --dark: #0b0b0b;
   --on-primary: #e8e8e8;
   --surface: #f8f8f8;
-  --background: #fdba1a;
+  --secondary: #fdba1a;
   --background-dark: #f09d06;
-  --background-gradient-one: #EDE574;
+  --background-gradient-one: #ede574;
   --background-gradient-two: #e1f4c4;
   --font-header: "Graduate", "Arial";
   --font-content: "Poppins", "SansSerif";
 }
 
 @keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Extra small devices (phones, 600px and down) */
