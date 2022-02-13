@@ -1,47 +1,84 @@
 ﻿<template>
   <div class="content">
     <router-link to="/">Start</router-link>
-    <h1>{{ $root.currentPlayer._id }}</h1>
-
-    <Question v-if="currentQuestion" :question="currentQuestion" />
-    <PlayerBar v-if="$root.players" :players="$root.players" />
+    <Question
+      v-show="currentQuestion && !currentResult"
+      :question="currentQuestion"
+      ref="questionComponent"
+      @initQuestion="init"
+    />
+    <Result
+      v-show="currentResult"
+      :result="currentResult"
+      ref="resultComponent"
+    />
+    <InfoBar
+      v-if="$root.players"
+      :players="$root.players"
+      :currentQuestion="currentQuestion"
+    />
+    <button
+      class="nextButton"
+      @click="nextQuestion()"
+      v-if="currentResult"
+      :disabled="$root.currentPlayer.role !== 'HOST'"
+    >
+      Next question
+    </button>
   </div>
 </template>
 
 <script>
 import Question from "../components/Question";
-import PlayerBar from "../components/PlayerBar";
+import Result from "../components/Result";
+import InfoBar from "../components/InfoBar";
 export default {
   name: "GamePanel",
-  components: { Question, PlayerBar },
+  components: { Question, Result, InfoBar },
   data() {
     return {
-      currentQuestion: null
+      currentQuestion: null,
+      currentResult: null
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    nextQuestion() {
+      this.$socket.emit("getNextQuestion", this.$root.currentPlayer._id);
+    }
+  },
   sockets: {
-    start(data) {
-      console.log("start");
-      console.log(arguments);
-      const { currentPlayer, players, matches } = data;
-      this.$root.currentPlayer = currentPlayer;
-      this.$root.players = players;
-    },
     nextQuestion(data) {
-      console.log(data);
+      console.log("nextQuestion: " + JSON.stringify(data));
+      this.$refs.questionComponent.init();
+      this.currentResult = null;
       this.currentQuestion = data;
-      const { id, totalQuestionCount, question, match } = data;
+    },
+    questionResults(data) {
+      this.currentResult = data;
     }
   },
   mounted() {
-    this.$socket.emit("getNextQuestion", this.$root.currentPlayer._id);
+    this.$socket.emit("getFirstQuestion", this.$root.currentPlayer._id);
   }
 };
 </script>
 
 <style scoped>
+.nextButton {
+  background-color: black;
+  border: 0;
+  padding: 10px;
+  box-shadow: 5px 5px 1px var(--primary-dark);
+  color: white;
+  transition: 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.nextButton:disabled {
+  color: darkslategray;
+}
+
 .title {
   position: absolute;
   left: 0;
