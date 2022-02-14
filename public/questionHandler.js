@@ -6,15 +6,16 @@ class QuestionHandler {
 
   loadQuestions(mongoose) {
     this.questions = ["Question 1 ?", "Questions 2 ?"];
-    const questionRepo = new (require("./question/QuestionRepo"))(mongoose);
-    const questionService = new (require("./question/QuestionService"))(
-      questionRepo
-    );
-    questionService.getAllQuestions().then((result) => {
-      console.log(result);
-      const res = result.map((q) => q.question);
-      this.questions = res;
-    });
+    if (mongoose) {
+      const questionRepo = new (require("./question/QuestionRepo"))(mongoose);
+      const questionService = new (require("./question/QuestionService"))(
+        questionRepo
+      );
+      questionService.getAllQuestions().then((result) => {
+        const res = result.map((q) => q.question);
+        this.questions = res;
+      });
+    }
   }
 
   generateMatches(players) {

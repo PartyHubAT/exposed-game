@@ -16,9 +16,6 @@ function initServerLogic(
   settings,
   mongoose
 ) {
-  players = JSON.parse(JSON.stringify(players));
-  players[0].role = "HOST";
-
   const questionHandler = new QuestionHandler(mongoose);
   const VOTINGTIME = settings && settings.votingTime ? settings.votingTime : 10;
   let timeouts = [];
@@ -33,6 +30,7 @@ function initServerLogic(
    * Initializes the game-data
    */
   (function init() {
+    players = JSON.parse(JSON.stringify(players));
     players[0].role = "HOST";
     questionHandler.generateMatches(players);
   })();
@@ -40,7 +38,6 @@ function initServerLogic(
   return {
     startGame() {
       console.log(" ---- PLAYERS ----");
-
       console.log(JSON.stringify(players));
       console.log("------------------------");
       players.forEach((player) => {
