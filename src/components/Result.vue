@@ -3,7 +3,7 @@
     <div class="result">
       <div>
         <h1 :class="{ winner: result.votesA.length > result.votesB.length }">
-          Votes for {{ result.playerA.name }} ({{ result.votesA.length }})
+          {{ result.votesA.length }} votes for {{ result.playerA.name }}
         </h1>
         <div
           v-for="vote in result.votesA"
@@ -16,7 +16,7 @@
       </div>
       <div>
         <h1 :class="{ winner: result.votesA.length < result.votesB.length }">
-          Votes for {{ result.playerB.name }} ({{ result.votesB.length }})
+          {{ result.votesB.length }} votes for {{ result.playerB.name }}
         </h1>
         <div
           v-for="vote in result.votesB"

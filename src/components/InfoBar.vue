@@ -94,7 +94,18 @@ export default {
 }
 .host {
   border: 1px dashed var(--secondary);
+  position: relative;
 }
+
+.host::before {
+  content: "HOST";
+  position: absolute;
+  top: -13px;
+  font-size: 70%;
+  color: var(--secondary);
+  left: 0;
+}
+
 .currentPlayer {
   background: var(--primary);
 }
