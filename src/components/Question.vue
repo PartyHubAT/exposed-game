@@ -46,6 +46,7 @@ export default {
     return {
       countAlreadyVoted: 0,
       votingTime: 10,
+      votingStop: null,
       selectedVote: null,
       alreadyVoted: false,
       interval: null
@@ -55,12 +56,18 @@ export default {
     init() {
       this.countAlreadyVoted = 0;
       this.votingTime = this.$root.settings.votingTime;
+      this.votingStart = new Date().getTime();
+      this.votingStop =
+        new Date().getTime() + this.$root.settings.votingTime * 1000;
+
       this.selectedVote = null;
       this.alreadyVoted = false;
       this.interval = setInterval(() => {
-        if (this.votingTime != 0) this.votingTime--;
-        if (this.votingTime == 0) clearInterval(interval);
-      }, 1000);
+        this.votingTime = parseInt(
+          (this.votingStop - new Date().getTime()) / 1000
+        );
+        if (this.votingStop <= new Date().getTime()) clearInterval(interval);
+      }, 100);
     },
     clearTimeouts() {
       if (this.interval) clearInterval(this.interval);
