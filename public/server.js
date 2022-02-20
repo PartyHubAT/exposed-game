@@ -23,6 +23,7 @@ function initServerLogic(
   let timeouts = [];
 
   function stopVoting(playerId, broadcast) {
+    if (!playerId) return;
     if (!broadcast)
       emitToOne(playerId, "questionResults", questionHandler.getResults());
     if (broadcast) emitToAll("questionResults", questionHandler.getResults());
@@ -66,6 +67,9 @@ function initServerLogic(
           stopVoting(playerId, true);
         }, 1000 * VOTINGTIME);
         timeouts.push(timeout);
+      },
+      getEndResults() {
+        emitToAll("endResults", questionHandler.getEndResults());
       },
       voteQuestion(playerId, voteObject) {
         console.log("voteQuestion");

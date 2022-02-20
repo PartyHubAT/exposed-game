@@ -5,7 +5,13 @@ class QuestionHandler {
   }
 
   loadQuestions(mongoose, CATEGORY) {
-    this.questions = ["Question 1 ?", "Questions 2 ?"];
+    this.questions = [
+      "Question 1",
+      "Question 3",
+      "Qeustion 4",
+      "Question 5",
+      "Question 6",
+    ];
     if (mongoose) {
       const questionRepo = new (require("./question/QuestionRepo"))(mongoose);
       const questionService = new (require("./question/QuestionService"))(
@@ -16,6 +22,7 @@ class QuestionHandler {
         this.questions = res;
       });
     }
+    this.questions = this.questions.sort(() => 0.5 - Math.random());
   }
 
   generateMatches(players) {
@@ -36,6 +43,12 @@ class QuestionHandler {
       });
     });
     this.matches = this.matches.sort(() => 0.5 - Math.random());
+    if (this.matches.length > this.questions.length) {
+      this.matches.splice(this.questions.length);
+    }
+    if (this.questions.length > this.matches.length) {
+      this.questions.splice(this.matches.length);
+    }
   }
 
   getMatch(index) {
@@ -69,6 +82,13 @@ class QuestionHandler {
 
   getResults() {
     return this.matches[this.index];
+  }
+
+  getEndResults() {
+    return {
+      matches: this.matches,
+      questions: this.questions,
+    };
   }
 }
 

@@ -11,6 +11,7 @@
       :result="currentResult"
       ref="resultComponent"
     />
+    <EndResult v-show="endResult" :endResult="endResult" />
     <InfoBar
       v-if="$root.players"
       :players="$root.players"
@@ -19,10 +20,18 @@
     <button
       class="nextButton"
       @click="nextQuestion()"
-      v-if="currentResult"
+      v-if="currentResult && !lastQuestion"
       :disabled="$root.currentPlayer.role !== 'HOST'"
     >
       Next question
+    </button>
+    <button
+      class="nextButton"
+      @click="endResults()"
+      v-if="currentResult && lastQuestion"
+      :disabled="$root.currentPlayer.role !== 'HOST'"
+    >
+      Show end results
     </button>
   </div>
 </template>
@@ -30,24 +39,31 @@
 <script>
 import Question from "../components/Question";
 import Result from "../components/Result";
+import EndResult from "../components/EndResult";
 import InfoBar from "../components/InfoBar";
 export default {
   name: "GamePanel",
-  components: { Question, Result, InfoBar },
+  components: { Question, Result, EndResult, InfoBar },
   data() {
     return {
       currentQuestion: null,
-      currentResult: null
+      currentResult: null,
+      endResult: null,
+      lastQuestion: false
     };
   },
   methods: {
     nextQuestion() {
       this.$socket.emit("getNextQuestion", this.$root.currentPlayer._id);
+    },
+    endResults() {
+      this.$socket.emit("getEndResults", this.$root.currentPlayer._id);
     }
   },
   sockets: {
     nextQuestion(data) {
-      console.log("nextQuestion: " + JSON.stringify(data));
+      if (data.questionCount === data.totalQuestionCount)
+        this.lastQuestion = true;
       this.$refs.questionComponent.init();
       this.currentResult = null;
       this.currentQuestion = data;
@@ -55,6 +71,15 @@ export default {
     questionResults(data) {
       this.$refs.questionComponent.clearTimeouts();
       this.currentResult = data;
+    },
+    endResults(data) {
+      setTimeout(() => {
+        this.endResult = data;
+        this.currentResult = null;
+        this.currentQuestion = null;
+      }, 1000);
+      console.log("endResults");
+      console.log(data);
     }
   },
   mounted() {

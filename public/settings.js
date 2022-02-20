@@ -25,7 +25,7 @@
    * @type {Settings}
    */
   defaultValues: {
-    votingTime: 30,
+    votingTime: 15,
     anonymousResults: true,
     category: "Normal",
   },
