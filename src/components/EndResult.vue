@@ -66,6 +66,11 @@ export default {
         this.data.push(data[c]);
       });
       this.options = {
+        plotOptions: {
+          bar: {
+            borderRadius: 15
+          }
+        },
         chart: {
           id: "x",
           width: "100%",
@@ -98,7 +103,7 @@ export default {
 .matchInfo {
   font-family: var(--font-header);
   display: block;
-  margin-top: 10px;
+  margin-bottom: 10px;
   padding-left: 5px;
   font-size: 80%;
   border-left: 1px solid black;
