@@ -66,7 +66,8 @@ export default {
         this.votingTime = parseInt(
           (this.votingStop - new Date().getTime()) / 1000
         );
-        if (this.votingStop <= new Date().getTime()) clearInterval(interval);
+        if (this.votingStop <= new Date().getTime())
+          clearInterval(this.interval);
       }, 100);
     },
     clearTimeouts() {
