@@ -5,11 +5,11 @@
   },
   {
     "question": "Who will perform their best TikTok choreography?",
-    "category": "spicy"
+    "category": "normal"
   },
   {
     "question": "Who will reveal their biggest secret?",
-    "category": "spicy"
+    "category": "normal"
   },
   {
     "question": "Who is the most likely to be awkward on the first date?",
@@ -17,6 +17,90 @@
   },
   {
     "question": "Who is the happiest in their life?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to skip work on a Monday?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to get into a fight?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to pee in the shower?",
+    "category": "spicy"
+  },
+  {
+    "question": "Who has the next hangover?",
+    "category": "spicy"
+  },
+  {
+    "question": "Who would be most likely to forget their mother's birthday?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to get a parking ticket?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to feign an emergency to escape on a bad date?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to have a one night stand?",
+    "category": "spicy"
+  },
+  {
+    "question": "Who would be most likely to go swimming naked?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to sleep with a friend's spusi?",
+    "category": "spicy"
+  },
+  {
+    "question": "Who would be most likely to over-edit their photos?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to go on a date to get free food?",
+    "category": "normal"
+  },
+  {
+    "question": "Who is the better cook?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to steal a pack of chewing gum?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to use drugs?",
+    "category": "spicy"
+  },
+  {
+    "question": "Who would be most likely to wear no underwear on a date?",
+    "category": "spicy"
+  },
+  {
+    "question": "Who would be most likely to cancel a date just because they don't feel like it?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to lie in this game?",
+    "category": "spicy"
+  },
+  {
+    "question": "Who would be most likely to get drunk quickly next Saturday?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to chug a bottle of beer?",
+    "category": "normal"
+  },
+  {
+    "question": "Who would be most likely to vomit from alcohol?",
     "category": "spicy"
   }
 ]
