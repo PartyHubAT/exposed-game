@@ -2,7 +2,13 @@
   <div v-if="endResult">
     <div id="questions">
       <h1>Thanks for playing exposed!</h1>
-      <h1>Summary of the game:</h1>
+      <h1>Most votes</h1>
+      <apexchart
+        v-if="options"
+        type="bar"
+        :options="options"
+        :series="series"
+      ></apexchart>
       <ol>
         <li
           class="questions"
@@ -33,7 +39,49 @@ export default {
       required: true
     }
   },
-  mounted() {}
+  data: function () {
+    return {
+      categories: null,
+      data: null,
+      options: null,
+      series: null
+    };
+  },
+  methods: {
+    initChartData() {}
+  },
+  mounted() {
+    if (this.endResult) {
+      let data = [];
+      this.$root.players.forEach((player) => {
+        data[player.name] = 0;
+      });
+      this.endResult.matches.forEach((match) => {
+        data[match.playerA.name] += match.votesA.length;
+        data[match.playerB.name] += match.votesB.length;
+      });
+      this.categories = Object.keys(data);
+      this.data = [];
+      this.categories.forEach((c) => {
+        this.data.push(data[c]);
+      });
+      this.options = {
+        chart: {
+          id: "x",
+          width: "100%",
+          fontFamily: "Helvetica, Arial, sans-serif"
+        },
+        xaxis: { categories: this.categories },
+        colors: ["#0b0b0b"],
+        grid: {
+          show: false
+        }
+      };
+      this.series = [{ name: "Votes", data: this.data }];
+    }
+    let charts = document.querySelector(".vue-apexcharts");
+    document.querySelectorAll(".apexchartsx").forEach((e) => e.remove());
+  }
 };
 </script>
 <style scoped>
@@ -41,7 +89,6 @@ export default {
   background: #c9971f;
   padding: 5px;
   border-radius: 5px;
-
   font-family: var(--font-header);
 }
 .question {
@@ -83,8 +130,5 @@ h1.winner {
 }
 .anonymousResults {
   color: var(--dark) !important;
-}
-#app {
-  background: yellow !important;
 }
 </style>

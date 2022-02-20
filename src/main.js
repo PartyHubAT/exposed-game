@@ -5,6 +5,7 @@ import store from "./store";
 import VueSocketIO from "vue-3-socket.io";
 import SocketIO from "socket.io-client";
 import "@/assets/global.css";
+import VueApexCharts from "vue3-apexcharts";
 
 const socket =
   window.socket ||
@@ -15,6 +16,7 @@ const socket =
 createApp(App)
   .use(store)
   .use(router)
+  .use(VueApexCharts)
   .use(
     new VueSocketIO({
       debug: true,

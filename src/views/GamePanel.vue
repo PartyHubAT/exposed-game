@@ -11,7 +11,7 @@
       :result="currentResult"
       ref="resultComponent"
     />
-    <EndResult v-show="endResult" :endResult="endResult" />
+    <EndResult v-if="endResult" :endResult="endResult" />
     <InfoBar
       v-if="$root.players"
       :players="$root.players"
