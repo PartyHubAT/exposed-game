@@ -16,8 +16,10 @@ function initServerLogic(
   settings,
   mongoose
 ) {
-  const questionHandler = new QuestionHandler(mongoose);
+  const CATEGORY = settings && settings.category ? settings.category : "normal";
   const VOTINGTIME = settings && settings.votingTime ? settings.votingTime : 10;
+  const questionHandler = new QuestionHandler(mongoose, CATEGORY);
+
   let timeouts = [];
 
   function stopVoting(playerId, broadcast) {

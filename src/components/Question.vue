@@ -118,6 +118,7 @@ export default {
   display: grid;
   gap: 20px;
   min-width: 300px;
+  padding: 0 10px;
 }
 
 .voteButtons button {

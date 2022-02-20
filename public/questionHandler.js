@@ -1,17 +1,17 @@
 class QuestionHandler {
-  constructor(mongoose) {
+  constructor(mongoose, CATEGORY) {
     this.index = 0;
-    this.loadQuestions(mongoose);
+    this.loadQuestions(mongoose, CATEGORY);
   }
 
-  loadQuestions(mongoose) {
+  loadQuestions(mongoose, CATEGORY) {
     this.questions = ["Question 1 ?", "Questions 2 ?"];
     if (mongoose) {
       const questionRepo = new (require("./question/QuestionRepo"))(mongoose);
       const questionService = new (require("./question/QuestionService"))(
         questionRepo
       );
-      questionService.getAllQuestions().then((result) => {
+      questionService.getAllQuestions(CATEGORY).then((result) => {
         const res = result.map((q) => q.question);
         this.questions = res;
       });
