@@ -53,6 +53,7 @@ export default {
   mounted() {
     if (this.endResult) {
       this.endResult.questions = this.endResult.questions.slice(
+        0,
         this.endResult.matches.length
       );
       let data = [];

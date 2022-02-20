@@ -7,6 +7,7 @@ class QuestionHandler {
   loadQuestions(mongoose, CATEGORY) {
     this.questions = [
       "Question 1",
+      "Question 2",
       "Question 3",
       "Qeustion 4",
       "Question 5",
@@ -44,10 +45,16 @@ class QuestionHandler {
     });
     this.matches = this.matches.sort(() => 0.5 - Math.random());
     if (this.matches.length > this.questions.length) {
-      this.matches.splice(this.questions.length);
+      this.matches = this.matches.slice(0, this.questions.length);
+      console.log(
+        "1 - " + this.matches.length + " -- " + this.questions.length
+      );
     }
     if (this.questions.length > this.matches.length) {
-      this.questions.splice(this.matches.length);
+      this.questions = this.questions.slice(0, this.matches.length);
+      console.log(
+        "2 - " + this.matches.length + " -- " + this.questions.length
+      );
     }
   }
 
@@ -66,8 +73,6 @@ class QuestionHandler {
   }
 
   handleVote(player, vote) {
-    console.log("handleVote");
-    console.log(arguments);
     const { index, isPlayerA } = vote;
     if (isPlayerA) this.matches[index].votesA.push(player);
     if (!isPlayerA) this.matches[index].votesB.push(player);
