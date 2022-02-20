@@ -20,8 +20,8 @@ class QuestionRepo {
    * Gets all games from the database
    * @return {Promise<Question[]>}
    */
-  async getAll() {
-    return this.#questionModel.find({}).exec();
+  async getAll(category) {
+    return this.#questionModel.find({ category: category }).exec();
   }
 }
 
