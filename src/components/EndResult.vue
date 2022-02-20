@@ -52,6 +52,9 @@ export default {
   },
   mounted() {
     if (this.endResult) {
+      this.endResult.questions = this.endResult.questions.slice(
+        this.endResult.matches.length
+      );
       let data = [];
       this.$root.players.forEach((player) => {
         data[player.name] = 0;
