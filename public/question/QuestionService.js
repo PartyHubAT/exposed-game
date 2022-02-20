@@ -18,7 +18,7 @@ class QuestionService {
    * @returns {Promise<Question[]>} The questions
    */
   async getAllQuestions(category) {
-    category = category.toLowercase();
+    category = category.toLowerCase();
     return await this.#questionRepo.getAll(category);
   }
 }
