@@ -5,7 +5,7 @@ class QuestionHandler {
   }
 
   loadQuestions(mongoose, CATEGORY) {
-    let questions = [
+    this.questions = [
       "Question 1",
       "Question 2",
       "Question 3",
@@ -20,10 +20,9 @@ class QuestionHandler {
       );
       questionService.getAllQuestions(CATEGORY).then((result) => {
         const res = result.map((q) => q.question);
-        questions = res;
+        this.questions = res.sort(() => 0.5 - Math.random());
       });
     }
-    this.questions = questions.sort(() => Math.random() - 0.5);
   }
 
   generateMatches(players) {
