@@ -6,6 +6,13 @@ export default {
   created() {
     this.$socket.emit("gameLoaded", {});
   },
+  sockets: {
+    returnToLobby() {
+      // Send message to parent
+      console.log("returns to lobby");
+      window.parent.postMessage("returnToLobby", "*");
+    }
+  }
 };
 </script>
 <style>
@@ -17,15 +24,15 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-/*
+  /*
   background: linear-gradient(to right,
     var(--background-gradient-one),
     var(--background-gradient-two)
   );
 */
   background: linear-gradient(-45deg, #080808, #2d2d2d, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	height: 100vh;
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
 }
 </style>

@@ -82,6 +82,9 @@ function initServerLogic(
           setTimeout(() => stopVoting(playerId, true), 3000);
         }
       },
+      returnToLobby() {
+        endGame();
+      },
     },
   };
 }

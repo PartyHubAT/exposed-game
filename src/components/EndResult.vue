@@ -1,5 +1,5 @@
 ﻿<template>
-  <div v-if="endResult">
+  <div v-if="endResult" class="endResult">
     <div id="questions">
       <h1>Thanks for playing exposed!</h1>
       <h1>Most votes</h1>
@@ -10,7 +10,7 @@
         :series="series"
       ></apexchart>
       <ol>
-        <li
+        <div
           class="questions"
           v-for="(question, index) in endResult.questions"
           :key="question"
@@ -25,9 +25,10 @@
               }})</span
             >
           </div>
-        </li>
+        </div>
       </ol>
     </div>
+    <button class="nextButton" @click="returnToLobby()">Return to lobby</button>
   </div>
 </template>
 <script>
@@ -48,7 +49,9 @@ export default {
     };
   },
   methods: {
-    initChartData() {}
+    returnToLobby() {
+      this.$socket.emit("returnToLobby", {});
+    }
   },
   mounted() {
     if (this.endResult) {
@@ -94,6 +97,21 @@ export default {
 };
 </script>
 <style scoped>
+.endResult {
+  overflow: scroll;
+}
+.nextButton {
+  background-color: black;
+  border: 0;
+  padding: 10px;
+  color: white;
+  transition: 0.3s ease-in-out;
+  border-radius: 5px;
+  margin: 0 auto;
+  display: block;
+  padding-top: 10px;
+  width: 100%;
+}
 #questions {
   background: #c9971f;
   padding: 5px;
