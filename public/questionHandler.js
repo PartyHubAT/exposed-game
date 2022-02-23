@@ -14,6 +14,7 @@ class QuestionHandler {
       "Question 6",
     ];
     if (mongoose) {
+      console.log("Loaded questions from db");
       const questionRepo = new (require("./question/QuestionRepo"))(mongoose);
       const questionService = new (require("./question/QuestionService"))(
         questionRepo
